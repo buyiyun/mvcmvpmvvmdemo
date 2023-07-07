@@ -8,14 +8,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.demo.R;
-import com.example.demo.mvc.controller.LoginController;
 import com.example.demo.mvc.model.User;
 
-public class MainActivity extends Activity implements LoginController.LoginListener {
+public class MainActivity extends Activity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
-    private LoginController loginController;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,26 +25,29 @@ public class MainActivity extends Activity implements LoginController.LoginListe
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
 
-        loginController = new LoginController(this);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                loginController.login(email, password);
+                user = new User(email, password);
+
+                if (validate(user)) {
+                    // Login successful
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Login failed
+                    Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    @Override
-    public void onLoginSuccess() {
-        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLoginFailure() {
-        Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+    private boolean validate(User user) {
+        // Validate the user credentials here
+        // This is just a dummy validation. In real world application, you should have proper validation here
+        return user.getEmail().equals("test@test.com") && user.getPassword().equals("password");
     }
 }
+
