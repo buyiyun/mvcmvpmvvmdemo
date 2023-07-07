@@ -1,5 +1,6 @@
 package com.example.demo.mvc.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +15,12 @@ public class MainActivity extends Activity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private Button registerButton;
+    private Button changePasswordButton;
+    private Button deleteAccountButton;
     private User user;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,9 @@ public class MainActivity extends Activity {
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
+        registerButton = findViewById(R.id.register);
+        changePasswordButton = findViewById(R.id.changePassword);
+        deleteAccountButton = findViewById(R.id.deleteAccount);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +50,46 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Register a new user
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+
+                user = new User(email, password);
+
+                // Show a message to indicate the user has been registered
+                Toast.makeText(MainActivity.this, "User Registered", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Change the user's password
+                String newPassword = passwordEditText.getText().toString();
+
+                if (user != null) {
+                    user.changePassword(newPassword);
+
+                    // Show a message to indicate the password has been changed
+                    Toast.makeText(MainActivity.this, "Password Changed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        deleteAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete the user's account
+                user = null;
+
+                // Show a message to indicate the account has been deleted
+                Toast.makeText(MainActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private boolean validate(User user) {
@@ -50,4 +98,5 @@ public class MainActivity extends Activity {
         return user.getEmail().equals("test@test.com") && user.getPassword().equals("password");
     }
 }
+
 
