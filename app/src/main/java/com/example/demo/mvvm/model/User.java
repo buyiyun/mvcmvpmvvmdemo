@@ -1,4 +1,4 @@
-package com.example.demo.mvc.model;
+package com.example.demo.mvvm.model;
 
 public class User {
     private String email;
