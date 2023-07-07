@@ -5,6 +5,7 @@ import com.example.demo.mvp.view.LoginView;
 
 public class LoginPresenterImpl implements LoginPresenter {
     private LoginView view;
+    private int failedCount;
 
     public LoginPresenterImpl(LoginView view) {
         this.view = view;
@@ -17,9 +18,12 @@ public class LoginPresenterImpl implements LoginPresenter {
         if (validate(user)) {
             // Login successful
             view.onLoginSuccess();
+            failedCount = 0;
         } else {
             // Login failed
             view.onLoginFailed();
+            failedCount++;
+            view.showFailedCount(failedCount);
         }
     }
 

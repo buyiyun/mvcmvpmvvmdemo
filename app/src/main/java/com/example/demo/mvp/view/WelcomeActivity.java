@@ -42,7 +42,13 @@ public class WelcomeActivity extends Activity implements LoginView {
       Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
   }
 
-  @Override
+    @Override
+    public void showFailedCount(int count) {
+        Toast.makeText(this, "Failed Count: " + count, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
   public void onLoginFailed() {
       Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
   }

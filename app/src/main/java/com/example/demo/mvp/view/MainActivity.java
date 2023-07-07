@@ -49,6 +49,12 @@ public class MainActivity extends Activity implements LoginView{
     public void onLoginFailed() {
         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void showFailedCount(int count) {
+        Toast.makeText(this, "Failed Count: " + count, Toast.LENGTH_SHORT).show();
+    }
+
 }
 
 
