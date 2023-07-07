@@ -3,13 +3,17 @@ package com.example.demo.mvc.view;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demo.R;
 import com.example.demo.mvc.model.User;
+
+import java.util.List;
 
 public class MainActivity extends Activity {
     private EditText emailEditText;
@@ -19,6 +23,8 @@ public class MainActivity extends Activity {
     private Button changePasswordButton;
     private Button deleteAccountButton;
     private User user;
+
+    private TextView friendsTextView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -32,6 +38,7 @@ public class MainActivity extends Activity {
         registerButton = findViewById(R.id.register);
         changePasswordButton = findViewById(R.id.changePassword);
         deleteAccountButton = findViewById(R.id.deleteAccount);
+        friendsTextView = findViewById(R.id.friends);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +103,14 @@ public class MainActivity extends Activity {
         // Validate the user credentials here
         // This is just a dummy validation. In real world application, you should have proper validation here
         return user.getEmail().equals("test@test.com") && user.getPassword().equals("password");
+    }
+
+    private void showFriends() {
+        if (user != null) {
+            List<String> friends = user.getFriends();
+            String friendsString = "Friends: " + TextUtils.join(", ", friends);
+            friendsTextView.setText(friendsString);
+        }
     }
 }
 
